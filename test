@@ -98,3 +98,15 @@ input[type=radio]:checked ~ .check {
 input[type=radio]:checked ~ .check::before{
   background: rgb(118, 13, 255);
 }
+
+.box{
+  margin-top:10px;
+  width:7px;
+  height: 7px;
+  border-radius: 100%;
+  border:5px solid transparent;
+  box-shadow: 
+  inset 0px 0px 0px 4px #fff,
+  0px 0px 0px 3px #fff;
+  ;
+}
