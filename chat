@@ -1,0 +1,73 @@
+server.js
+
+const express = require("express");
+const http = require("http");
+const socketIo = require("socket.io");
+const port = process.env.PORT || 8080;
+const index = require("./routes/index");
+const app = express();
+app.use(index);
+const server = http.createServer(app);
+const io = socketIo(server);
+
+io.on("connection" , socket => {
+  console.log("hi hi")
+  socket.on('connect' , function() {
+    console.log(text , '132323')
+  })
+
+  socket.on('msg' , function(msg) {
+    console.log(msg , '132323')
+  })
+})
+
+server.listen(port, () => {
+  console.log(`start on ${port}`)
+})
+
+
+/routes/index.js --
+
+const express = require("express");
+const router = express.Router();
+router.get("/", (req, res) => {
+  res.send({ response: "hello guhade chat" }).status(200);
+});
+module.exports = router;
+
+
+client
+import React, { Component } from "react";
+import socketIOClient from "socket.io-client";
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      response: false,
+      endpoint: "http://localhost:8080"
+    };
+  }
+  componentDidMount() {
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.emit("connect", '나다');
+  }
+
+  sendMessage = () => {
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    alert('메시지 전송')
+    let msg = 'fd'
+    socket.emit("msg", msg);
+
+  }
+  render() {
+    const { response } = this.state;
+    return (
+        <div style={{ textAlign: "center" }}>
+          <div onClick={()=>{this.sendMessage()}}>구하다 채팅</div>
+        </div>
+    );
+  }
+}
+export default App;
